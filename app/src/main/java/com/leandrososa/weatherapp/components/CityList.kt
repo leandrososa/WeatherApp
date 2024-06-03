@@ -7,14 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.leandrososa.weatherapp.model.City
+import com.leandrososa.weatherapp.model.Place
 import com.leandrososa.weatherapp.ui.theme.WeatherAppTheme
 
 @Composable
-fun CityList(cities: List<City>) {
+fun CityList(places: List<Place>) {
     Column {
-        for (city in cities) {
-            CityItem(city)
+        for (place in places) {
+            CityItem(place)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -28,23 +28,19 @@ fun CityListPreview() {
     WeatherAppTheme {
         CityList(
             listOf(
-                City(
+                Place(
                     name = "Buenos Aires",
-                    weatherDescription = "Cloudy",
-                    currentTemperature = 11.7,
-                    lat = null,
-                    lon = null,
-                    weatherIcon = null,
-                    dayTemps = null
+                    lat = -34.61,
+                    lon = -58.38,
+                    country = "AR",
+                    state = "Buenos Aires"
                 ),
-                City(
+                Place(
                     name = "Bahía Blanca",
-                    weatherDescription = "Sunny",
-                    currentTemperature = 18.3,
-                    lat = null,
-                    lon = null,
-                    weatherIcon = null,
-                    dayTemps = null
+                    lat = -38.72,
+                    lon = -62.27,
+                    country = "AR",
+                    state = "Buenos Aires"
                 )
             )
         )

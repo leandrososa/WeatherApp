@@ -1,6 +1,5 @@
 package com.leandrososa.weatherapp
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -11,13 +10,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHost
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.leandrososa.weatherapp.ui.theme.WeatherAppTheme
 import com.leandrososa.weatherapp.view.cities.Cities
+import com.leandrososa.weatherapp.view.cities.CitiesViewModel
 import com.leandrososa.weatherapp.view.weather.Weather
 
 @Composable
@@ -41,13 +41,22 @@ fun MainNavHost(
     modifier: Modifier = Modifier,
     navHostController : NavHostController
 ) {
+    val vm : CitiesViewModel = viewModel(factory = CitiesViewModel.factory)
+
     NavHost(
         modifier = modifier,
         navController = navHostController,
         startDestination = "cities"
     ) {
         composable("cities") {
-            Cities(navHostController)
+            Cities(
+                navController = navHostController,
+                modifier = modifier,
+                state = vm.uiState,
+                onAction = {
+                    vm.execute(it)
+                }
+            )
         }
         composable("weather") {
             Weather(navHostController)
