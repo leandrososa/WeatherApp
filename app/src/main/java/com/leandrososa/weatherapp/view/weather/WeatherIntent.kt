@@ -1,7 +1,7 @@
 package com.leandrososa.weatherapp.view.weather
 
 sealed class WeatherIntent {
-    object LoadWeather : WeatherIntent()
-    object ShowError : WeatherIntent()
-    object ShowLoading : WeatherIntent()
+    data class GetWeather(val city: String): WeatherIntent()
+    object ShareWeather: WeatherIntent()
+    object ReturnToCities: WeatherIntent()
 }
