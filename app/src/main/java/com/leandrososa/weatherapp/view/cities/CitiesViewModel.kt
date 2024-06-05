@@ -24,7 +24,7 @@ class CitiesViewModel(val repo: IRepository): ViewModel() {
         }
     }
 
-    var searchText =  mutableStateOf("");
+    var searchText =  mutableStateOf("")
     var places = listOf(
         Place(
             name = "Buenos Aires",
@@ -37,6 +37,34 @@ class CitiesViewModel(val repo: IRepository): ViewModel() {
             name = "Bahía Blanca",
             lat = -38.72,
             lon = -62.27,
+            country = "AR",
+            state = "Buenos Aires"
+        ),
+        Place(
+            name = "Córdoba",
+            lat = -31.42,
+            lon = -64.18,
+            country = "AR",
+            state = "Córdoba"
+        ),
+        Place(
+            name = "Rosario",
+            lat = -32.95,
+            lon = -60.64,
+            country = "AR",
+            state = "Santa Fe"
+        ),
+        Place(
+            name = "Misiones",
+            lat = -27.37,
+            lon = -55.90,
+            country = "AR",
+            state = "Misiones"
+        ),
+        Place(
+            name = "La Plata",
+            lat = -34.92,
+            lon = -57.95,
             country = "AR",
             state = "Buenos Aires"
         )
