@@ -10,15 +10,15 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.leandrososa.weatherapp.router.Route
 import com.leandrososa.weatherapp.ui.theme.WeatherAppTheme
-import com.leandrososa.weatherapp.view.cities.Cities
-import com.leandrososa.weatherapp.view.cities.CitiesViewModel
-import com.leandrososa.weatherapp.view.weather.Weather
+import com.leandrososa.weatherapp.view.cities.CitiesPage
+import com.leandrososa.weatherapp.view.weather.WeatherPage
 
 @Composable
 fun MainPage(modifier: Modifier = Modifier) {
@@ -36,40 +36,37 @@ fun MainPage(modifier: Modifier = Modifier) {
     }
 }
 
+
+
 @Composable
 fun MainNavHost(
     modifier: Modifier = Modifier,
     navHostController : NavHostController
 ) {
-    val vm : CitiesViewModel = viewModel(factory = CitiesViewModel.factory)
 
     NavHost(
         modifier = modifier,
         navController = navHostController,
-        startDestination = "cities"
+        startDestination = Route.Cities.id
     ) {
-        composable("cities") {
-            Cities(
-                navController = navHostController,
-                modifier = modifier,
-                state = vm.uiState,
-                onAction = {
-                    vm.execute(it)
-                }
+        composable(Route.Cities.id) {
+            CitiesPage(
+                navHostController = navHostController
             )
         }
-        composable("weather") {
-            Weather(navHostController)
-        }
-        /*composable(
-            route = "home/{username}",
-            arguments = listOf(
-                navArgument(name = "username") { type = NavType.StringType }
+        composable(
+            route = "weather?lat={lat}&lon={lon}",
+            arguments =  listOf(
+                navArgument("lat") { defaultValue = 0.0 },
+                navArgument("lon") { defaultValue = 0.0 }
             )
-        ){
-            val username = it.arguments?.getString("username")
-            HomePage(username)
-        }*/
+        ) {
+            //Weather(navHostController)
+            val lat = it.arguments?.getFloat("lat") ?: 0.0f
+                val lon = it.arguments?.getFloat("lon") ?: 0.0f
+                WeatherPage(navHostController, lat = lat, lon = lon)
+
+        }
     }
 }
 

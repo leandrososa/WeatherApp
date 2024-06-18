@@ -14,9 +14,14 @@ import com.leandrososa.weatherapp.model.WeatherMain
 import com.leandrososa.weatherapp.model.WeatherResponse
 import com.leandrososa.weatherapp.model.WeatherSys
 import com.leandrososa.weatherapp.model.Wind
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class MockRepository: IRepository {
     override suspend fun search(cityName: String): SearchResponse {
+        withContext(Dispatchers.IO) {
+            Thread.sleep(1000)
+        }
         return SearchResponse(
             listOf(
                 Place(
@@ -53,6 +58,9 @@ class MockRepository: IRepository {
     }
 
     override suspend fun getWeather(coord: Coord): WeatherResponse {
+        withContext(Dispatchers.IO) {
+            Thread.sleep(1000)
+        }
         return WeatherResponse(
             Coord(-31.4173, -64.1833),
             listOf(
@@ -87,6 +95,9 @@ class MockRepository: IRepository {
         )
     }
     override suspend fun getForecast(coord: Coord): ForecastResponse {
+        withContext(Dispatchers.IO) {
+            Thread.sleep(1000)
+        }
         return ForecastResponse(
             "200",
             0,
