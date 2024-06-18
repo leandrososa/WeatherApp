@@ -62,7 +62,7 @@ class MockRepository: IRepository {
             Thread.sleep(1000)
         }
         return WeatherResponse(
-            Coord(-31.4173, -64.1833),
+            Coord((-31.4173).toFloat(), (-64.1833).toFloat()),
             listOf(
                 WeatherDesc(
                     800,
@@ -191,7 +191,7 @@ class MockRepository: IRepository {
             CityInfo(
                 3860259,
                 "Córdoba",
-                Coord(-31.4173, -64.1833),
+                Coord((-31.4173).toFloat(), (-64.1833).toFloat()),
                 "AR",
                 1428214,
                 -10800,
