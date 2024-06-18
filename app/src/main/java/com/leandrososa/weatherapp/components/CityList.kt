@@ -11,10 +11,10 @@ import com.leandrososa.weatherapp.model.Place
 import com.leandrososa.weatherapp.ui.theme.WeatherAppTheme
 
 @Composable
-fun CityList(places: List<Place>) {
+fun CityList(places: List<Place>, onPlaceClick: (Place) -> Unit) {
     Column {
         for (place in places) {
-            CityItem(place)
+            CityItem(place, onPlaceClick)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -42,7 +42,8 @@ fun CityListPreview() {
                     country = "AR",
                     state = "Buenos Aires"
                 )
-            )
+            ),
+            onPlaceClick = {}
         )
     }
 }

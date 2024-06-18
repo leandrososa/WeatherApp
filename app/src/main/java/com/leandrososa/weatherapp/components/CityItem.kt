@@ -1,5 +1,6 @@
 package com.leandrososa.weatherapp.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,13 +19,14 @@ import com.leandrososa.weatherapp.model.Place
 import com.leandrososa.weatherapp.ui.theme.WeatherAppTheme
 
 @Composable
-fun CityItem(place: Place) {
+fun CityItem(place: Place, onPlaceClick: (Place) -> Unit) {
     val vm: CityListViewModel = viewModel()
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp)
+            .clickable(onClick = { onPlaceClick(place) })
     ){
         Row(
             modifier = Modifier
@@ -68,7 +70,8 @@ fun CityItemPreview() {
                 lon = -58.38,
                 country = "AR",
                 state = "Buenos Aires"
-            )
+            ),
+            onPlaceClick = {}
         )
     }
 }
