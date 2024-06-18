@@ -16,7 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.leandrososa.weatherapp.model.Coord
 
 @Composable
 fun Weather(
@@ -26,6 +28,9 @@ fun Weather(
     ) {
     // todo: split into components
     val vm: WeatherViewModel = viewModel()
+    LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+        onAction(WeatherIntent.GetWeather(Coord(vm.lat, vm.lon)))
+    }
     Row {
         Column(
             modifier = modifier
