@@ -28,6 +28,7 @@ fun Weather(
     ) {
     // todo: split into components
     val vm: WeatherViewModel = viewModel()
+
     LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
         onAction(WeatherIntent.GetWeather(Coord(vm.lat, vm.lon)))
     }
@@ -67,8 +68,8 @@ fun Weather(
                     ){
                         Column(modifier = Modifier.padding(16.dp)){
                             Text(text = "Pronóstico extendido", fontSize = 18.sp)
-                        }
 
+                        }
                     }
                     Column(
                         modifier = modifier
