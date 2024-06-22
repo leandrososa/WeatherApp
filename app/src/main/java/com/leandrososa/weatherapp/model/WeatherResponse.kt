@@ -1,5 +1,8 @@
 package com.leandrososa.weatherapp.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class WeatherResponse(
     val coord: Coord,
     val weather: List<WeatherDesc>,
@@ -16,6 +19,7 @@ data class WeatherResponse(
     val cod: Int
 )
 
+@Serializable
 data class WeatherSys(
     val type: Int,
     val id: Int,
