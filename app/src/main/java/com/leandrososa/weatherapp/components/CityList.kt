@@ -30,15 +30,15 @@ fun CityListPreview() {
             listOf(
                 Place(
                     name = "Buenos Aires",
-                    lat = -34.61,
-                    lon = -58.38,
+                    lat = -34.61f,
+                    lon = -58.38f,
                     country = "AR",
                     state = "Buenos Aires"
                 ),
                 Place(
                     name = "Bahía Blanca",
-                    lat = -38.72,
-                    lon = -62.27,
+                    lat = -38.72f,
+                    lon = -62.27f,
                     country = "AR",
                     state = "Buenos Aires"
                 )

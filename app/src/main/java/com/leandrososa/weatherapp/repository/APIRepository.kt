@@ -1,7 +1,9 @@
 package com.leandrososa.weatherapp.repository
 
+import android.util.Log
 import com.leandrososa.weatherapp.model.Coord
 import com.leandrososa.weatherapp.model.ForecastResponse
+import com.leandrososa.weatherapp.model.Place
 import com.leandrososa.weatherapp.model.SearchResponse
 import com.leandrososa.weatherapp.model.WeatherResponse
 import io.ktor.client.HttpClient
@@ -27,15 +29,25 @@ class APIRepository : IRepository {
         }
     }
     override suspend fun search(cityName: String): SearchResponse {
+        Log.d("APIRepository", "search: $cityName")
         val resp = client.get("https://api.openweathermap.org/geo/1.0/direct"){
             parameter("q",cityName)
             parameter("limit",100)
             parameter("lang","es")
             parameter("appid",apiKey)
         }
+        Log.d("APIRepository", "code: ${resp.status}")
+        Log.d("APIRepository", "json: ${resp.body<String>()}")
         if(resp.status == HttpStatusCode.OK){
-            val cities = resp.body<SearchResponse>()
-            return cities
+            try {
+                var cities = SearchResponse(listOf())
+                cities.places = resp.body<List<Place>>()
+                return cities
+            } catch (e: Exception){
+                Log.e("APIRepository", "search: ${e.message}")
+                throw e
+            }
+
         } else {
             throw Exception()
         }

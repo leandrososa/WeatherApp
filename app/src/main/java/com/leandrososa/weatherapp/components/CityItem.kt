@@ -66,8 +66,8 @@ fun CityItemPreview() {
         CityItem(
             Place(
                 name = "Buenos Aires",
-                lat = -34.61,
-                lon = -58.38,
+                lat = -34.61f,
+                lon = -58.38f,
                 country = "AR",
                 state = "Buenos Aires"
             ),
