@@ -1,5 +1,7 @@
 package com.leandrososa.weatherapp.view.weather
 
+import android.icu.text.DecimalFormat
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,8 +32,11 @@ fun Weather(
     ) {
     // todo: split into components
     val vm: WeatherViewModel = viewModel()
+    val df = DecimalFormat("#.#")
+    val context = LocalContext.current
 
-    LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+
+    LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_CREATE) {
         onAction(WeatherIntent.GetWeather(Coord(vm.lat, vm.lon)))
     }
     Row {
@@ -50,15 +57,20 @@ fun Weather(
                         textAlign = TextAlign.Center,
                         fontSize = 26.sp
                     )
+                    Image(
+                        painter =
+                            painterResource(id = context.resources.getIdentifier("i${state.weather.weather[0].icon}", "drawable", context.packageName)),
+                        contentDescription = "Weather icon",
+                    )
                     Text(
-                        text = "${state.weather.main.temp}º",
+                        text = "${df.format(state.weather.main.temp)}º",
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Light,
                         fontSize = 84.sp,
                         lineHeight = 30.sp
                     )
                     Text(
-                        text = "Max. ${state.weather.main.tempMax}º | Min. ${state.weather.main.tempMin}º",
+                        text = "Max. ${df.format(state.weather.main.tempMax)}º | Min. ${df.format(state.weather.main.tempMin)}º",
                         textAlign = TextAlign.Center,
                         fontSize = 18.sp
                     )

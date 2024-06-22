@@ -6,7 +6,6 @@ import com.leandrososa.weatherapp.model.Coord
 import com.leandrososa.weatherapp.model.DayWeather
 import com.leandrososa.weatherapp.model.ForecastResponse
 import com.leandrososa.weatherapp.model.ForecastSys
-import com.leandrososa.weatherapp.model.LocalNames
 import com.leandrososa.weatherapp.model.Place
 import com.leandrososa.weatherapp.model.SearchResponse
 import com.leandrososa.weatherapp.model.WeatherDesc
@@ -26,30 +25,25 @@ class MockRepository: IRepository {
             listOf(
                 Place(
                     "Cordoba",
-                    -31.4173391,
-                    -64.183319,
+                    mapOf("es" to "Córdoba"),
+                    -31.4173391f,
+                    -64.183319f,
                     "AR",
-                    "Cordoba",
-                    LocalNames(
-                        "es",
-                        "Córdoba"
-                    )
+                    "Cordoba"
                 ),
                 Place(
                     "Cordoba",
-                    37.8845813,
-                    -4.7760138,
+                    mapOf("es" to "Córdoba"),
+                    37.8845813f,
+                    -4.7760138f,
                     "ES",
                     "Andalusia",
-                    LocalNames(
-                        "es",
-                        "Córdoba"
-                    )
                 ),
                 Place(
                     "Córdoba",
-                    37.8845813,
-                    -4.7760138,
+                    null,
+                    37.8845813f,
+                    -4.7760138f,
                     "MX",
                     "Veracruz"
                 )

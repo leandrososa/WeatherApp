@@ -1,5 +1,6 @@
 package com.leandrososa.weatherapp.view.weather.forecast
 
+import android.icu.text.DecimalFormat
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,9 +24,10 @@ fun Forecast(
     onAction: (ForecastIntent) -> Unit,
 ){
     val vm: ForecastViewModel = viewModel()
-    LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+    LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_CREATE) {
         onAction(ForecastIntent.GetForecast(Coord(vm.lat, vm.lon)))
     }
+    val df = DecimalFormat("#.#")
     Row{
         Column(
             modifier = modifier
@@ -46,13 +48,13 @@ fun Forecast(
                             fontSize = 12.sp
                         )
                         Text(
-                            text = "${dayweather.main.temp}º",
+                            text = "${df.format(dayweather.main.temp)}º",
                             textAlign = TextAlign.Right,
                             fontWeight = FontWeight.Light,
                             fontSize = 12.sp,
                         )
                         Text(
-                            text = "Max. ${dayweather.main.tempMax}º | Min. ${dayweather.main.tempMin}º",
+                            text = "Max. ${df.format(dayweather.main.tempMax)}º | Min. ${df.format(dayweather.main.tempMin)}º",
                             textAlign = TextAlign.Center,
                             fontSize = 12.sp
                         )

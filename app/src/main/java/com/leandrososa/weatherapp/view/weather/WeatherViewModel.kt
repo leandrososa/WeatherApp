@@ -22,7 +22,6 @@ class WeatherViewModel(
 
 
     var uiState by mutableStateOf<WeatherState>(WeatherState.Loading)
-
     fun execute(intent: WeatherIntent) {
         when(intent) {
             is WeatherIntent.GetWeather -> updateWeather(intent.coord)

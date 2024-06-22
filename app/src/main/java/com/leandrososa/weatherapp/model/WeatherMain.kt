@@ -1,7 +1,9 @@
 package com.leandrososa.weatherapp.model
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class WeatherMain(
     @SerializedName("temp") val temp: Double,
     @SerializedName("feels_like") val feelsLike: Double,

@@ -14,57 +14,47 @@ import com.leandrososa.weatherapp.router.Route
 import kotlinx.coroutines.launch
 
 class CitiesViewModel(val repo: IRepository, val router: IRouter): ViewModel() {
-
-    /*companion object{
-        val factory: ViewModelProvider.Factory = viewModelFactory{
-            initializer {
-                val repo = MockRepository()
-                CitiesViewModel(repo)
-            }
-        }
-    }*/
-
     var searchText =  mutableStateOf("")
     var places = listOf(
         Place(
             name = "Buenos Aires",
-            lat = -34.61,
-            lon = -58.38,
+            lat = -34.61f,
+            lon = -58.38f,
             country = "AR",
             state = "Buenos Aires"
         ),
         Place(
             name = "Bahía Blanca",
-            lat = -38.72,
-            lon = -62.27,
+            lat = -38.72f,
+            lon = -62.27f,
             country = "AR",
             state = "Buenos Aires"
         ),
         Place(
             name = "Córdoba",
-            lat = -31.42,
-            lon = -64.18,
+            lat = -31.42f,
+            lon = -64.18f,
             country = "AR",
             state = "Córdoba"
         ),
         Place(
             name = "Rosario",
-            lat = -32.95,
-            lon = -60.64,
+            lat = -32.95f,
+            lon = -60.64f,
             country = "AR",
             state = "Santa Fe"
         ),
         Place(
             name = "Misiones",
-            lat = -27.37,
-            lon = -55.90,
+            lat = -27.37f,
+            lon = -55.90f,
             country = "AR",
             state = "Misiones"
         ),
         Place(
             name = "La Plata",
-            lat = -34.92,
-            lon = -57.95,
+            lat = -34.92f,
+            lon = -57.95f,
             country = "AR",
             state = "Buenos Aires"
         )
@@ -103,7 +93,7 @@ class CitiesViewModel(val repo: IRepository, val router: IRouter): ViewModel() {
         }
     }
 
-    private fun goToWeather(lat: Double, lon: Double){
+    private fun goToWeather(lat: Float, lon: Float){
         router.navigate(Route.Weather(lat, lon))
     }
 }
