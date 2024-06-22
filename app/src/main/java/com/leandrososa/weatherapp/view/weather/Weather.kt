@@ -91,7 +91,7 @@ fun Weather(
                     ){
                         Button(
                             modifier = Modifier.fillMaxWidth(),
-                            onClick={onAction(WeatherIntent.ShareWeather)}
+                            onClick={onAction(WeatherIntent.ShareWeather(context = context, weather = state.weather))}
                         ){
                             Text("Compartir")
                         }
