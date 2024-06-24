@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.ktor.contentnegotiation)
     implementation(libs.ktor.serialization)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.google.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
