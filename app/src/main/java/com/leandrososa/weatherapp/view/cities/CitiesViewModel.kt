@@ -1,5 +1,7 @@
 package com.leandrososa.weatherapp.view.cities
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,11 +9,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.location.LocationServices
 import com.leandrososa.weatherapp.model.Place
 import com.leandrososa.weatherapp.repository.IRepository
 import com.leandrososa.weatherapp.router.IRouter
 import com.leandrososa.weatherapp.router.Route
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 class CitiesViewModel(val repo: IRepository, val router: IRouter): ViewModel() {
     var searchText =  mutableStateOf("")
@@ -59,19 +64,23 @@ class CitiesViewModel(val repo: IRepository, val router: IRouter): ViewModel() {
             state = "Buenos Aires"
         )
     )
+    var location  = mutableStateOf<Pair<Double, Double>?>(null);
+    var hasPermission = mutableStateOf(false)
     var uiState by mutableStateOf<CitiesState>(CitiesState.DefaultValues(places))
 
     fun execute(intent: CitiesIntent){
         when(intent){
-            is CitiesIntent.UseGeo -> useGeo()
+            is CitiesIntent.UseGeo -> useGeo(intent.context)
             is CitiesIntent.Search -> search(intent.query)
             is CitiesIntent.GoToWeather -> goToWeather(intent.lat, intent.lon)
         }
     }
 
-    private fun useGeo(){
-        //todo: get geo location
-
+    private fun useGeo(context: Context){
+        viewModelScope.launch {
+            location.value = getCurrentLocation(context)
+            goToWeather(location.value!!.first.toFloat(), location.value!!.second.toFloat())
+        }
     }
 
     private fun search(query: String){
@@ -95,6 +104,35 @@ class CitiesViewModel(val repo: IRepository, val router: IRouter): ViewModel() {
 
     private fun goToWeather(lat: Float, lon: Float){
         router.navigate(Route.Weather(lat, lon))
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @SuppressLint("MissingPermission")
+    private suspend fun getCurrentLocation(context: Context): Pair<Double, Double>? {
+        //todo: show failure error on snack bar
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+        return suspendCancellableCoroutine { continuation ->
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        continuation.resume(
+                            Pair(location.latitude, location.longitude),
+                            onCancellation = {  }
+                        )
+                    } else {
+                        continuation.resume(
+                            null,
+                            onCancellation = {  }
+                        )
+                    }
+                }
+                .addOnFailureListener {
+                    continuation.resume(
+                        null,
+                        onCancellation = {  }
+                    )
+                }
+        }
     }
 }
 

@@ -20,12 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.leandrososa.weatherapp.components.CityList
+import com.leandrososa.weatherapp.permissions.RequestLocationPermission
 
 @Composable
 fun Cities(
@@ -34,6 +36,11 @@ fun Cities(
     onAction: (CitiesIntent) -> Unit
 ) {
     val vm: CitiesViewModel = viewModel()
+    val context = LocalContext.current
+    RequestLocationPermission {
+        vm.hasPermission.value = true
+    }
+
     Column(modifier = modifier.padding(16.dp)) {
         Row{
             TextField(
@@ -64,7 +71,10 @@ fun Cities(
                 modifier =
                     Modifier
                         .height(56.dp),
-                onClick = {}
+                enabled = vm.hasPermission.value,
+                onClick = {
+                    onAction(CitiesIntent.UseGeo(context))
+                }
             ) {
                 Icon(
                     Icons.Rounded.Place,
